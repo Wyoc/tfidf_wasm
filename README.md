@@ -1,2 +1,2 @@
-# TF-DFP in wasm
+# TF-IDF in wasm
 
