@@ -15,5 +15,5 @@ extern {
 
 #[wasm_bindgen]
 pub fn greet() {
-    alert("Hello, it's tfidf time once again with WASM!");
+    alert("Hello, it's tfidf time once again!");
 }
