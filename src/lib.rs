@@ -1,7 +1,12 @@
+mod normalizer;
 mod utils;
+use std::collections::HashMap;
+
 use crate::utils::log;
 
 use wasm_bindgen::prelude::*;
+
+use tfidf::{TfIdf, TfIdfDefault};
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
@@ -10,7 +15,7 @@ use wasm_bindgen::prelude::*;
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[wasm_bindgen]
-extern {
+extern "C" {
     fn alert(s: &str);
 }
 
@@ -18,4 +23,27 @@ extern {
 pub fn greet() {
     console_log!("Test console.log");
     alert("Hello, it's tfidf time once again!");
+}
+
+#[wasm_bindgen]
+pub fn lower(s: &str) -> String {
+    normalizer::lowercase(s)
+}
+
+#[wasm_bindgen]
+pub fn make_tokens(s: &str) -> js_sys::Array {
+    let tokens = normalizer::tokenize(s);
+    tokens.into_iter().map(JsValue::from).collect()
+}
+
+#[wasm_bindgen]
+pub fn get_vector() -> JsValue {
+    let rust_vec = HashMap::from([
+        ("Mercury", 0.4),
+        ("Venus", 0.7),
+        ("Earth", 1.0),
+        ("Mars", 1.5),
+    ]);
+    console_log!("{:?}", rust_vec);
+    serde_wasm_bindgen::to_value(&rust_vec).unwrap()
 }
