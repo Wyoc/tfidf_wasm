@@ -16,3 +16,6 @@ console.log(tokenized)
 let test = wasm.get_vector();
 console.log(test)
 console.log(Array.from(test.values()));
+
+let voc = wasm.Vocabulary.new(["Doudou et bibou"]);
+console.log(voc.words);

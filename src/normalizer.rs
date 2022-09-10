@@ -6,7 +6,7 @@ pub fn lowercase(text: &str) -> String {
     text.to_lowercase()
 }
 
-pub fn tokenize(text: &str) -> Vec<String> {
+pub fn tokenize(text: String) -> Vec<String> {
     let tokens =text
                                 .split_whitespace()
                                 .map(String::from)
@@ -41,11 +41,11 @@ fn lowercase_test(){
 
 #[test]
 fn tokenize_test(){
-    let original = "Hello MeetSYS";
+    let original = String::from("Hello MeetSYS");
     let tokenized = tokenize(original);
     assert_eq!(tokenized, vec!["Hello", "MeetSYS"]);
 
-    let original2 = "Hello  MeetSYS";
+    let original2 = String::from("Hello  MeetSYS");
     let tokenized2 = tokenize(original2);
     assert_eq!(tokenized2, vec!["Hello", "MeetSYS"]);
 }

@@ -1,12 +1,11 @@
 mod normalizer;
 mod utils;
+pub mod vocabulary;
 use std::collections::HashMap;
 
 use crate::utils::log;
 
 use wasm_bindgen::prelude::*;
-
-use tfidf::{TfIdf, TfIdfDefault};
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
@@ -31,7 +30,7 @@ pub fn lower(s: &str) -> String {
 }
 
 #[wasm_bindgen]
-pub fn make_tokens(s: &str) -> js_sys::Array {
+pub fn make_tokens(s: String) -> js_sys::Array {
     let tokens = normalizer::tokenize(s);
     tokens.into_iter().map(JsValue::from).collect()
 }
