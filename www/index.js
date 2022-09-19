@@ -17,5 +17,11 @@ let test = wasm.get_vector();
 console.log(test)
 console.log(Array.from(test.values()));
 
-let voc = wasm.Vocabulary.new(["Doudou et bibou"]);
-console.log(voc.words);
+let voc = wasm.Vocabulary.new(["Doudou et bibou et bibou", 
+                                "All the bibou",
+                                "Is this a bibou"]);
+console.log(voc.words_count());
+
+console.log(voc.vocabulary());
+
+console.log(voc.words_in_doc());
