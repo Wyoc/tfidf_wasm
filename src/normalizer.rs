@@ -19,8 +19,6 @@ pub fn to_unicode(text: &str) -> String {
     unidecode(text)
 }
 
-
-
 #[test]
 fn to_unicode_test(){
     assert_eq!(to_unicode("étude"), "etude");
