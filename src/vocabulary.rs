@@ -12,11 +12,13 @@ use itertools::Itertools;
 pub struct Vocabulary {
     words_count: BTreeMap<String, u32>,
     words_in_doc: BTreeMap<String, u32>,
+    min_df: f32,
+    max_df: f32,
 }
 
 #[wasm_bindgen]
 impl Vocabulary {
-    pub fn new(docs: &JsValue) -> Vocabulary {
+    pub fn new(docs: &JsValue) -> Self {
         let doc_list: Vec<String> = docs.into_serde().unwrap();
 
         let processed_doc: Vec<Vec<String>> = doc_list
@@ -42,9 +44,11 @@ impl Vocabulary {
                     m
                 });
 
-        Vocabulary {
+        Self {
             words_count,
             words_in_doc,
+            min_df: 0.0,
+            max_df: 1.0,
         }
     }
 
@@ -53,7 +57,6 @@ impl Vocabulary {
         serde_wasm_bindgen::to_value(&vocab).unwrap()
     }
 
-    //#[wasm_bindgen]
     pub fn words_count(&self) -> JsValue {
         serde_wasm_bindgen::to_value(&self.words_count).unwrap()
     }

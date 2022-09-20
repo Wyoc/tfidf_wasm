@@ -1,6 +1,7 @@
 mod normalizer;
 mod utils;
 pub mod vocabulary;
+pub mod tfidf;
 use std::collections::HashMap;
 
 use crate::utils::log;

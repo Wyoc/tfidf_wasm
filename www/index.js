@@ -1,27 +1,25 @@
 import * as wasm from "wasm-tfidf";
-import data from './datas/base.json'
+import json from './datas/base.json'
 
 // wasm.greet();
 
-var json = data["pages"];
+var data = json["pages"];
+var rows = [];
+for (var i = 1; i <= 3; i++) {
+    rows.push(data[i]["extract"]);
+}
+console.log(rows)
 
-console.log(json)
+let voc = wasm.Vocabulary.new(rows);
 
-let lowered = wasm.lower("Hello DouDoU");
-console.log(lowered);
+// let tfidf = wasm.Tfidf.new(["Doudou et bibou et bibou", 
+//                                 "All the bibou",
+//                                 "Is this a bibou"]);
 
-let tokenized = wasm.make_tokens("Hello this is dog")
-console.log(tokenized)
-
-let test = wasm.get_vector();
-console.log(test)
-console.log(Array.from(test.values()));
-
-let voc = wasm.Vocabulary.new(["Doudou et bibou et bibou", 
-                                "All the bibou",
-                                "Is this a bibou"]);
 console.log(voc.words_count());
 
 console.log(voc.vocabulary());
 
 console.log(voc.words_in_doc());
+
+// console.log(tfidf.vocabulary.vocabulary())
