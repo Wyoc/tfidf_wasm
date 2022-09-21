@@ -43,6 +43,8 @@ itertools = "0.10.3"
 
 array_tool = "1.0.3"
 
+nalgebra = "0.31.1"
+
 [dev-dependencies]
 wasm-bindgen-test = "0.3.32"
 
