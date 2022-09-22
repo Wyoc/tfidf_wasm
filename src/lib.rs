@@ -5,6 +5,8 @@ pub mod tfidf;
 use std::collections::HashMap;
 
 use crate::utils::log;
+extern crate nalgebra as na;
+use na::{Matrix3, Vector3};
 
 use wasm_bindgen::prelude::*;
 
@@ -46,4 +48,20 @@ pub fn get_vector() -> JsValue {
     ]);
     console_log!("{:?}", rust_vec);
     serde_wasm_bindgen::to_value(&rust_vec).unwrap()
+}
+
+#[wasm_bindgen]
+pub fn matmul() {
+    // A vector with three components.
+        let v = Vector3::new(1, 2, 3);
+
+        // A matrix with three lines and four columns.
+        // We chose values such that, for example, 23 is at the row 2 and column 3.
+        let m = Matrix3::new( 11, 12, 13,
+                                21, 22, 23,
+                                31, 32, 33);
+        let vm = v.transpose() * m;
+        console_log!("Matrix multiplication");
+        console_log!("{:?}", vm);
+        //serde_wasm_bindgen::to_value(vm).unwrap()
 }

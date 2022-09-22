@@ -23,3 +23,5 @@ console.log(voc.vocabulary());
 console.log(voc.words_in_doc());
 
 // console.log(tfidf.vocabulary.vocabulary())
+
+wasm.matmul();

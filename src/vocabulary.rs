@@ -10,6 +10,7 @@ use itertools::Itertools;
 #[wasm_bindgen]
 #[derive(Serialize, Deserialize)]
 pub struct Vocabulary {
+    ids: Vec<String>,
     words_count: BTreeMap<String, u32>,
     words_in_doc: BTreeMap<String, u32>,
     min_df: f32,
@@ -18,7 +19,10 @@ pub struct Vocabulary {
 
 #[wasm_bindgen]
 impl Vocabulary {
-    pub fn new(docs: &JsValue) -> Self {
+    pub fn new_from_docs(docs: &JsValue, ids: &JsValue) -> Self {
+
+        let ids: Vec<String> = ids.into_serde().unwrap();
+
         let doc_list: Vec<String> = docs.into_serde().unwrap();
 
         let processed_doc: Vec<Vec<String>> = doc_list
@@ -45,6 +49,7 @@ impl Vocabulary {
                 });
 
         Self {
+            ids,
             words_count,
             words_in_doc,
             min_df: 0.0,
