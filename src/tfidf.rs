@@ -28,15 +28,4 @@ impl Vocabulary {
     }
 
 
-    pub fn fit(&self) {
-
-    }
-
-    pub fn transform(&self) {
-
-    }
-
-    pub fn fit_transform(&self) {
-
-    }
 }
