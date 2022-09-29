@@ -6,7 +6,7 @@ use std::collections::HashMap;
 
 use crate::utils::log;
 extern crate nalgebra as na;
-use na::{Matrix3, Vector3};
+use na::{Matrix3, Vector3, dmatrix};
 
 use wasm_bindgen::prelude::*;
 
@@ -61,7 +61,10 @@ pub fn matmul() {
                                 21, 22, 23,
                                 31, 32, 33);
         let vm = v.transpose() * m;
+        let d = dmatrix![1,2,3;
+                                                           4,5,6];
         console_log!("Matrix multiplication");
         console_log!("{:?}", vm);
+        console_log!("{:?}", d)
         //serde_wasm_bindgen::to_value(vm).unwrap()
 }
