@@ -7,7 +7,7 @@ use crate::utils::log;
 use std::collections::BTreeMap;
 use itertools::Itertools;
 use ndarray::prelude::*;
-use ndarray::{Array, Axis, concatenate};
+use ndarray::{Array, ArrayD, Axis, concatenate};
 
 #[wasm_bindgen]
 #[derive(Serialize, Deserialize)]
@@ -100,6 +100,29 @@ impl Vocabulary {
         
         serde_wasm_bindgen::to_value(&doc_vector).unwrap()
     }
+
+    pub fn transform_doc_from_voc(docs: &JsValue, vocabulary: JsValue) -> JsValue{
+        let doc: String = docs.into_serde().unwrap();
+        let vocab: Vec<String> = vocabulary.into_serde().unwrap();
+
+        let processed_doc: Vec<String> = tokenize(doc).into_iter()
+                                                        .map(|w| lowercase(w.as_str()))
+                                                        .filter(|w| vocab.contains(w))
+                                                        .collect();
+
+        let mut doc_vector = Array::<usize, _>::zeros(vocab.len());
+        for (j, word) in vocab.iter().enumerate(){
+            doc_vector[[j]] = processed_doc.iter().filter(|&n| n == word).count();
+            }
+        
+        serde_wasm_bindgen::to_value(&doc_vector).unwrap()
+
+    }
+
+    // fn _Tf(&self, count_matrix: ArrayD::<usize,>) -> ArrayD::<f32> {
+    //     let tf = count_matrix;
+    // }
+    
 
     pub fn similarity(){
         
