@@ -1,9 +1,11 @@
 import * as wasm from "wasm-tfidf";
-import json from './datas/base.json'
+import json_pages from './datas/base.json'
+import json_sw from './datas/stop_words_english.json'
 
 // wasm.greet();
 
-var data = json["pages"];
+// Build pages array
+var data = json_pages["pages"];
 var rows = [];
 var idx = []
 for (var i = 1; i <= 3; i++) {
@@ -12,7 +14,13 @@ for (var i = 1; i <= 3; i++) {
 }
 // console.log(rows)
 console.log(idx)
-
+ 
+// build stopwords array
+var sw = [];
+for (var w in json_sw) {
+    sw.push(json_sw[w]);
+}
+console.log(sw)
 // let voc = wasm.Vocabulary.new_from_docs(rows, idx);
 
 let voc = wasm.Vocabulary.fit(["Doudou et bibou et bibou", 
@@ -39,3 +47,6 @@ let test_doc = voc.transform_docs(["C'est nous les bibou"]);
 
 console.log(test_doc)
 // wasm.matmul();
+
+let keywords = wasm.get_keywords(rows[0], sw, 1, 1);
+console.log(keywords);
