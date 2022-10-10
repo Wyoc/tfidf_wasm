@@ -2,7 +2,7 @@
 
 ## Install
 
-- Install wasm-pack (yay, brew, whathever..)
+- Install wasm-pack (yay, brew, whatever..)
 - `wasm-pack build` in main repo
 - `npm install` in www/
 - `npm run start` 
