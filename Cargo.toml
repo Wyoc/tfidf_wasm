@@ -49,6 +49,8 @@ ndarray = {version = "0.15.6", features = ["serde"] }
 
 rake = "0.3.3"
 
+voca_rs = "1.15.0"
+
 [dev-dependencies]
 wasm-bindgen-test = "0.3.32"
 

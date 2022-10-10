@@ -1,5 +1,6 @@
 pub mod keywords;
 mod normalizer;
+pub mod stopwords;
 pub mod tfidf;
 mod utils;
 pub mod vocabulary;
@@ -14,6 +15,8 @@ use na::{dmatrix, Matrix3, Vector3};
 extern crate serde_json;
 
 use wasm_bindgen::prelude::*;
+
+use voca_rs::strip::strip_tags;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
@@ -82,12 +85,19 @@ pub fn stopwords_from_vec(stopwords_vector: &JsValue) -> StopWords {
 }
 
 #[wasm_bindgen]
-pub fn get_keywords(input_doc: JsValue, input_sw_vec: &JsValue, min_length: usize, max_length: usize) -> JsValue {
+pub fn strip_html(html_doc: String) -> String{
+    console_log!("{:?}", html_doc);
+    strip_tags(&html_doc)
+}
+
+
+#[wasm_bindgen]
+pub fn get_keywords(input_doc: String, input_sw_vec: &JsValue, min_length: usize, max_length: usize) -> JsValue {
     utils::set_panic_hook();
-    let doc: String = input_doc.into_serde().unwrap();
+    //let doc: String = input_doc.into_serde().unwrap();
     let sw = stopwords_from_vec(input_sw_vec);
     let r = Rake::new(sw);
-    let keywords = r.run(&doc);
+    let keywords = r.run(&input_doc);
     let mut candidats = HashMap::<String, f64>::new();
     for kw in keywords.into_iter(){
         candidats.insert(kw.keyword,kw.score);
@@ -98,3 +108,5 @@ pub fn get_keywords(input_doc: JsValue, input_sw_vec: &JsValue, min_length: usiz
 
     serde_wasm_bindgen::to_value(&candidats).unwrap()
 }
+
+

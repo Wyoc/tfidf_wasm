@@ -48,5 +48,9 @@ let test_doc = voc.transform_docs(["C'est nous les bibou"]);
 console.log(test_doc)
 // wasm.matmul();
 
-let keywords = wasm.get_keywords(rows[0], sw, 1, 1);
+let keywords = wasm.get_keywords(rows[0], wasm.get_stopwords_en(), 1, 1);
 console.log(keywords);
+
+let html = '<p>Is it ok ?</p>';
+let striped = wasm.strip_html(html);
+console.log(striped);
